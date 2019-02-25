@@ -28,11 +28,15 @@ class Auth {
       try {
         const { email, password } = req.body;
         const resp = await auth.login(email, password);
+        const login = 'success';
         res.status(200).json({
+          login,
           resp
         });
       } catch (error) {
+        const login = 'fail';
         res.status(401).json({
+          login,
           error: error.message
         });
       }
@@ -42,11 +46,15 @@ class Auth {
       try {
         const body = req.body;
         const resp = await auth.signup(body);
+        const signup = 'success';
         res.status(201).json({
+          signup,
           resp
         });
       } catch (error) {
+        const signup = 'fail';
         res.status(400).json({
+          signup,
           error: error.message
         });
       }
