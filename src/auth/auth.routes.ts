@@ -19,7 +19,7 @@ class Auth {
         });
       } catch (error) {
         res.status(401).json({
-          error: error.message
+          error
         });
       }
     });
@@ -37,7 +37,7 @@ class Auth {
         const login = 'fail';
         res.status(401).json({
           login,
-          error: error.message
+          error
         });
       }
     });
@@ -52,10 +52,18 @@ class Auth {
           resp
         });
       } catch (error) {
-        const signup = 'fail';
+        let signup = 'fail';
+        if (error.code === 11000) {
+          signup = 'fail duplicate';
+        } else {
+          for (const err in error.errors) {
+            signup = `${signup} ${error.errors[err].path}`;
+          }
+        }
+
         res.status(400).json({
           signup,
-          error: error.message
+          error
         });
       }
     });
@@ -69,7 +77,7 @@ class Auth {
         });
       } catch (error) {
         res.status(400).json({
-          error: error.message
+          error
         });
       }
     });
@@ -84,7 +92,7 @@ class Auth {
         });
       } catch (error) {
         res.status(400).json({
-          error: error.message
+          error
         });
       }
     });
